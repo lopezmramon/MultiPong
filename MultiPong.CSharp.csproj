@@ -154,19 +154,25 @@
     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\SupportLogger.cs" />
     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TimeKeeper.cs" />
     <Compile Include="Assets\Scripts\BallScript.cs" />
+    <Compile Include="Assets\Scripts\EnemyPaddle.cs" />
     <Compile Include="Assets\Scripts\GameCreateMenuScript.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay.cs" />
     <Compile Include="Assets\Scripts\LeftLimit.cs" />
     <Compile Include="Assets\Scripts\LeftPlayer.cs" />
+    <Compile Include="Assets\Scripts\LocalMPBallScript.cs" />
+    <Compile Include="Assets\Scripts\LocalMultiplayerScript.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MultiplayerMenuScript.cs" />
     <Compile Include="Assets\Scripts\NetworkPlayer.cs" />
+    <Compile Include="Assets\Scripts\OfflinePaddleController.cs" />
     <Compile Include="Assets\Scripts\OnlineGameplay.cs" />
     <Compile Include="Assets\Scripts\PaddleController.cs" />
     <Compile Include="Assets\Scripts\RandomMatchmaker.cs" />
     <Compile Include="Assets\Scripts\RightLimit.cs" />
     <Compile Include="Assets\Scripts\RightPlayer.cs" />
+    <Compile Include="Assets\Scripts\SinglePlayerBallScript.cs" />
+    <Compile Include="Assets\Scripts\SinglePlayerGameplay.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
   </ItemGroup>
   <ItemGroup>

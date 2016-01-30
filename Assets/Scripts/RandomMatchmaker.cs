@@ -32,6 +32,7 @@ public class RandomMatchmaker : Photon.PunBehaviour {
     public override void OnJoinedRoom()
     {
         GameManager.instance.ChangeState(GameManager.GameState.Gameplay);
+        Debug.Log(GameManager.instance.currentState);
         if (PhotonNetwork.isMasterClient)
         {
             GameObject playerpaddle = PhotonNetwork.Instantiate("Paddle", GameObject.Find("LeftPaddleLocation").transform.position, transform.rotation, 0) as GameObject;
@@ -46,19 +47,21 @@ public class RandomMatchmaker : Photon.PunBehaviour {
     }
 
     //Sending the Max Points for the Server
-    [PunRPC]
-    void sendMaxPoints(int data)
-    {
-        Gameplay.instance.maxPoints = data;
-    }
+   
 
-    void OnPhotonPlayerConnected()
+   /* void OnPhotonPlayerConnected()
     {
         if (PhotonNetwork.isMasterClient)
         {
             sendMaxPoints( Gameplay.instance.maxPoints);
             Debug.Log(Gameplay.instance.maxPoints);
         }
+    }*/
+
+    void OnPhotonPlayerDisconnected()
+    {
+        GameManager.instance.ChangeState(GameManager.GameState.MainMenu);
+
     }
 
 }

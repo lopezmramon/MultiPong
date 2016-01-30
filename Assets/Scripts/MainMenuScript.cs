@@ -15,12 +15,12 @@ public class MainMenuScript : MonoBehaviour {
 
     public void SinglePlayerGame()
     {
-        gameManager.ChangeState(GameManager.GameState.Gameplay);
+        gameManager.ChangeState(GameManager.GameState.SinglePlayerGameplay);
 
     }
     public void LocalMultiplayerGame()
     {
-        gameManager.ChangeState(GameManager.GameState.Gameplay);
+        gameManager.ChangeState(GameManager.GameState.LocalMPGameplay);
 
     }
     public void OnlineMultiplayerGame()

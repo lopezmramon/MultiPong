@@ -4,6 +4,7 @@ using CnControls;
 
 public class BallScript : MonoBehaviour {
     public static BallScript instance;
+    private PhotonView myPhotonView;
     Rigidbody2D r2d;
     [SerializeField]
     float speed;
@@ -13,6 +14,7 @@ public class BallScript : MonoBehaviour {
         instance = this;
         r2d = GetComponent<Rigidbody2D>();
         gameStart = false;
+        myPhotonView = GetComponent<PhotonView>();
 	}
 	
 	void Update () {
@@ -42,25 +44,30 @@ public class BallScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.name == "RightWall")
+        if(col.gameObject.name == "RightWall" & !Gameplay.instance.gameOver)
         {
-            Gameplay.instance.UpdatePoints("Right");
+            Gameplay.instance.gamePlayPhotonView.RPC("UpdatePoints", PhotonTargets.All,"Right");
             GameRestarted();
         }
-        if (col.gameObject.name == "LeftWall")
+        if (col.gameObject.name == "LeftWall" & !Gameplay.instance.gameOver)
         {
-            Gameplay.instance.UpdatePoints("Left");
+            Gameplay.instance.gamePlayPhotonView.RPC("UpdatePoints", PhotonTargets.All, "Right");
+
+            // Gameplay.instance.UpdatePoints("Left");
+
             GameRestarted();
         }
 
         if (col.gameObject.CompareTag("Wall"))
         {
-            if (Mathf.Abs(r2d.velocity.y) <= 0.5f)
+            //Speeding the ball up
+            if (r2d.velocity.x < 0)
             {
-                r2d.AddForce(new Vector2(-Mathf.Sign(r2d.velocity.x) * 1.5f, -Mathf.Sign(r2d.velocity.y) * 5f));
+                r2d.AddForce(new Vector2(-5, 0));
             }
-            else {
-                r2d.AddForce(new Vector2(-Mathf.Sign(r2d.velocity.x) * 1.5f, -Mathf.Sign(r2d.velocity.y) * 1.5f));
+            if (r2d.velocity.x > 0)
+            {
+                r2d.AddForce(new Vector2(5, 0));
             }
         }
 

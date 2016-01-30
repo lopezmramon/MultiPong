@@ -8,7 +8,10 @@ public class GameManager : MonoBehaviour {
    
 
     
-    Canvas MainMenuCanvas, GameplayCanvas, OptionsCanvas, CreditsCanvas,MultiplayerCanvas,GameCreateMenuCanvas;
+    Canvas MainMenuCanvas, GameplayCanvas, 
+        OptionsCanvas, CreditsCanvas,MultiplayerCanvas,
+        GameCreateMenuCanvas,SinglePlayerGameplayCanvas,
+        LocalMPGameplayCanvas;
     [SerializeField]
     GameObject gameplayStuff;
 
@@ -17,7 +20,9 @@ public class GameManager : MonoBehaviour {
         MainMenu,
         Gameplay,
         MultiplayerMenu,
+        SinglePlayerGameplay,
         GameCreateMenu,
+        LocalMPGameplay,
         
         Credits,
 
@@ -31,7 +36,7 @@ public class GameManager : MonoBehaviour {
         GameplayCanvas = GameObject.Find("GameplayCanvas").gameObject.GetComponent<Canvas>();
         MultiplayerCanvas = GameObject.Find("MultiplayerCanvas").gameObject.GetComponent<Canvas>();
         GameCreateMenuCanvas = GameObject.Find("GameCreateMenuCanvas").gameObject.GetComponent<Canvas>();
-
+       
         ChangeState(GameState.MainMenu);
 
     }
@@ -86,6 +91,38 @@ public class GameManager : MonoBehaviour {
         }
         GameplayCanvas.enabled = false;
         Gameplay.instance.enabled = false;
+
+    }
+    IEnumerator SinglePlayerGameplayState()
+    {
+
+        GameplayCanvas.enabled = true;
+        GameplayCanvas.GetComponent<SinglePlayerGameplay>().enabled = true;
+
+
+
+        while (currentState == GameState.SinglePlayerGameplay)
+        {
+            yield return null;
+        }
+        GameplayCanvas.enabled = false;
+        GameplayCanvas.GetComponent<SinglePlayerGameplay>().enabled = false;
+
+    }
+    IEnumerator LocalMPGameplayState()
+    {
+
+        GameplayCanvas.enabled = true;
+        GameplayCanvas.GetComponent<LocalMultiplayerScript>().enabled = true;
+
+
+
+        while (currentState == GameState.LocalMPGameplay)
+        {
+            yield return null;
+        }
+        GameplayCanvas.enabled = false;
+        GameplayCanvas.GetComponent<LocalMultiplayerScript>().enabled = false;
 
     }
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using CnControls;
 
 public class Gameplay : Photon.MonoBehaviour {
-
+    public PhotonView gamePlayPhotonView;
     public static Gameplay instance;
     public Text pointsLeft, pointsRight;
 
@@ -12,22 +12,34 @@ public class Gameplay : Photon.MonoBehaviour {
     
     private Text rightPlayerText, leftPlayerText;
     float timer;
-    public bool playersInRoom, gameStart,gameStarted;
+    public bool playersInRoom, gameStart,gameStarted, gameOver;
+
+    public AudioClip victoryClip, defeatClip;
+
+
 	void Start () {
         instance = this;
+        gamePlayPhotonView = PhotonView.Get(this);
+
+        //Finding GameObjects
         rightPlayerText = GameObject.Find("RightPlayerText").gameObject.GetComponent<Text>();
         leftPlayerText = GameObject.Find("LeftPlayerText").gameObject.GetComponent<Text>();
+        pointsLeft = GameObject.Find("PointsLeft").gameObject.GetComponent<Text>();
+        pointsRight = GameObject.Find("PointsRight").gameObject.GetComponent<Text>();
+        pointsLeft.text = "Points: 0";
+        pointsRight.text = "Points: 0";
+
+
         playersInRoom = false;
         gameStart = false;
         gameStarted = false;
         timer = 3;
         currentPointsLeft = currentPointsRight = 0;
+        maxPoints = 1;
     }
 	void OnJoinedRoom()
     {
-
-       
-        
+           
         if (PhotonNetwork.isMasterClient)
         {
             rightPlayerText.enabled = false;
@@ -117,12 +129,40 @@ public class Gameplay : Photon.MonoBehaviour {
                 rightPlayerText.text = "";
                 leftPlayerText.text = "";
                 GameStarted();
-
-
+                
             }
         }
 
-       
+        //Handling Player Victory or defeat
+       if (currentPointsLeft == maxPoints)
+        {
+            gameOver = true;
+            if (PhotonNetwork.isMasterClient) {
+                rightPlayerText.text = "You lost :(";
+                SoundManager.instance.audioSource.PlayOneShot(defeatClip);
+            }
+            if (!PhotonNetwork.isMasterClient) {
+                leftPlayerText.text = "You win!";
+                SoundManager.instance.audioSource.PlayOneShot(victoryClip);
+            }
+            
+        }
+       if (currentPointsRight == maxPoints)
+        {
+            gameOver = true;
+
+            if (PhotonNetwork.isMasterClient)
+            {
+                rightPlayerText.text = "Victory!";
+                SoundManager.instance.audioSource.PlayOneShot(victoryClip);
+            }
+            if (!PhotonNetwork.isMasterClient)
+            {
+                leftPlayerText.text = "You got Schooled :(";
+                SoundManager.instance.audioSource.PlayOneShot(defeatClip);
+            }
+
+        }
 
 
 
@@ -140,7 +180,7 @@ public class Gameplay : Photon.MonoBehaviour {
         gameStart = false;
         gameStarted = true;
     }
-
+    [PunRPC]
     public void UpdatePoints(string side)
     {
         if (side == "Right")
@@ -158,5 +198,22 @@ public class Gameplay : Photon.MonoBehaviour {
 
 
     }
-   
+    //MaxPoints
+    [PunRPC]
+    public void sendMaxPoints(int data)
+    {
+       maxPoints = data;
+        Debug.Log(maxPoints);
+    }
+
+    //If a Player Connects
+    
+    void OnPhotonPlayerConnected()
+    {
+        if (PhotonNetwork.isMasterClient)
+        {
+            sendMaxPoints(maxPoints);
+        }
+    }
+
 }
