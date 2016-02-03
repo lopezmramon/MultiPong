@@ -154,6 +154,9 @@
     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\SupportLogger.cs" />
     <Compile Include="Assets\Photon Unity Networking\UtilityScripts\TimeKeeper.cs" />
     <Compile Include="Assets\Scripts\BallScript.cs" />
+    <Compile Include="Assets\Scripts\BetterNetworkPlayer.cs" />
+    <Compile Include="Assets\Scripts\ButtonManager.cs" />
+    <Compile Include="Assets\Scripts\EndCanvas.cs" />
     <Compile Include="Assets\Scripts\EnemyPaddle.cs" />
     <Compile Include="Assets\Scripts\GameCreateMenuScript.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
@@ -161,9 +164,10 @@
     <Compile Include="Assets\Scripts\LeftLimit.cs" />
     <Compile Include="Assets\Scripts\LeftPlayer.cs" />
     <Compile Include="Assets\Scripts\LocalMPBallScript.cs" />
-    <Compile Include="Assets\Scripts\LocalMultiplayerScript.cs" />
+    <Compile Include="Assets\Scripts\LocalMultiplayerGameplay.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MultiplayerMenuScript.cs" />
+    <Compile Include="Assets\Scripts\MusicManager.cs" />
     <Compile Include="Assets\Scripts\NetworkPlayer.cs" />
     <Compile Include="Assets\Scripts\OfflinePaddleController.cs" />
     <Compile Include="Assets\Scripts\OnlineGameplay.cs" />

@@ -5,16 +5,19 @@ using CnControls;
 public class SinglePlayerBallScript : MonoBehaviour {
 
     public static SinglePlayerBallScript instance;
-    Rigidbody2D r2d;
+    public Rigidbody2D r2d;
     [SerializeField]
     float speed;
     bool gameStart;
-    int consecutiveWallHits;
+    int consecutiveWallHits,consecutivePaddleHits;
+
+    public AudioClip[] audios;
     void Start()
     {
         instance = this;
         gameStart = false;
         r2d = GetComponent<Rigidbody2D>();
+        consecutivePaddleHits = 0; consecutiveWallHits = 0;
     }
 
     void Update()
@@ -24,23 +27,42 @@ public class SinglePlayerBallScript : MonoBehaviour {
             Kickoff(speed);
 
         }
-        if (consecutiveWallHits >= 8)
+        if (consecutiveWallHits >= 10)
         {
             GameRestarted();
         }
+        if (consecutivePaddleHits >= 10)
+        {
+            GameRestarted();
+
+        }
+        r2d.AddForce(new Vector2(0.001f*Mathf.Sign(r2d.velocity.x), 0));
     }
 
 
     void Kickoff(float Kickoffspeed)
     {
-        r2d.AddForce(new Vector2(Random.Range(-Kickoffspeed,  Kickoffspeed), Random.Range(-Kickoffspeed,  Kickoffspeed)));
+        int whereToGo = Random.Range(0, 2);
+        int leftOrRight = Random.Range(-2, 2);
+        float horizontalMultiplier = Random.Range(0.5f, 0.95f);
+        switch (whereToGo)
+        {
+            case 0:
+                r2d.AddForce(new Vector2(Mathf.Sign(leftOrRight) * Kickoffspeed * horizontalMultiplier, Random.Range(0, Kickoffspeed)));
+
+                break;
+            case 1:
+                r2d.AddForce(new Vector2(Mathf.Sign(leftOrRight) * Kickoffspeed * horizontalMultiplier, Random.Range(-Kickoffspeed, 0)));
+
+                break;
+        }
+        Debug.Log("mamalo");
         gameStart = true;
-
-
     }
     public void GameRestarted()
     {
         consecutiveWallHits = 0;
+        consecutivePaddleHits = 0;
         gameStart = false;
         transform.position = new Vector3(0, 0, 0);
         r2d.velocity = new Vector2(0, 0);
@@ -52,11 +74,18 @@ public class SinglePlayerBallScript : MonoBehaviour {
     {
         if (col.gameObject.name == "RightWall")
         {
+            SoundManager.instance.audioSource.pitch = Random.Range(0.45f, 1f);
+            SoundManager.instance.audioSource.PlayOneShot(audios[3]);
+
             SinglePlayerGameplay.instance.UpdatePoints("Right");
             GameRestarted();
         }
         if (col.gameObject.name == "LeftWall" & !Gameplay.instance.gameOver)
         {
+            SoundManager.instance.audioSource.pitch = Random.Range(0.45f, 1f);
+            SoundManager.instance.audioSource.PlayOneShot(audios[3]);
+
+
             SinglePlayerGameplay.instance.UpdatePoints("Left");
 
 
@@ -65,21 +94,39 @@ public class SinglePlayerBallScript : MonoBehaviour {
 
         if (col.gameObject.CompareTag("Wall"))
         {
+            SoundManager.instance.audioSource.pitch = Random.Range(0.45f, 1f);
+            SoundManager.instance.audioSource.PlayOneShot(audios[0]);
+
             consecutiveWallHits++;
+            consecutivePaddleHits = 0;
             //Speeding the ball up
-            if (r2d.velocity.x < 0)
+           if (r2d.velocity.x < 0)
             {
-                r2d.AddForce(new Vector2(-5, 0));
+                r2d.AddForce(new Vector2(-1, 0));
             }
             if (r2d.velocity.x > 0)
             {
-                r2d.AddForce(new Vector2(5, 0));
+                r2d.AddForce(new Vector2(1, 0));
             }
         }
         if (col.gameObject.name.Contains("ddle"))
         {
             consecutiveWallHits = 0;
+            consecutivePaddleHits++;
+            SoundManager.instance.audioSource.pitch = Random.Range(0.45f, 1f);
+            SoundManager.instance.audioSource.PlayOneShot(audios[Random.Range(1, 3)]);
+           
+
         }
+     
+
+   
 
     }
+
+   
+
 }
+
+
+

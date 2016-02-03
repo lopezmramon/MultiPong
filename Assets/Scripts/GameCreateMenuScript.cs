@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class GameCreateMenuScript : Photon.MonoBehaviour {
 
     private InputField gameName, gamePoints;
+    public AudioClip clip;
     void Start()
     {
         gameName = GameObject.Find("GameName").gameObject.GetComponent<InputField>();
@@ -14,19 +15,21 @@ public class GameCreateMenuScript : Photon.MonoBehaviour {
 
 	public void JoinGamebyName()
     {
+        SoundManager.instance.audioSource.PlayOneShot(clip);
         RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 2 };
-        PhotonNetwork.JoinOrCreateRoom(gameName.text, roomOptions, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom(gameName.text, roomOptions, TypedLobby.Default); 
     }
     public void CreateGamebyName()
     {
-        if(int.TryParse(gamePoints.text,out Gameplay.instance.maxPoints))
+        SoundManager.instance.audioSource.PlayOneShot(clip);
+        if (int.TryParse(gamePoints.text,out RandomMatchmaker.instance.pointInfo))
         {
-            Gameplay.instance.maxPoints = int.Parse(gamePoints.text);
+            RandomMatchmaker.instance.pointInfo = int.Parse(gamePoints.text);
             RoomOptions roomOptions = new RoomOptions() { isVisible = false, maxPlayers = 2 };
             PhotonNetwork.JoinOrCreateRoom(gameName.text, roomOptions, TypedLobby.Default);
 
         }
-        else if(!int.TryParse(gamePoints.text, out Gameplay.instance.maxPoints))
+        else if(!int.TryParse(gamePoints.text, out RandomMatchmaker.instance.pointInfo))
         {
             gamePoints.text = "You didn't input a number, silly";
         }
@@ -36,6 +39,7 @@ public class GameCreateMenuScript : Photon.MonoBehaviour {
 
     public void MultiplayerMenu()
     {
+        SoundManager.instance.audioSource.PlayOneShot(clip);
         GameManager.instance.ChangeState(GameManager.GameState.MultiplayerMenu);
 
     }

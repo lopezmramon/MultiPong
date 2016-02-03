@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour {
     Canvas MainMenuCanvas, GameplayCanvas, 
         OptionsCanvas, CreditsCanvas,MultiplayerCanvas,
         GameCreateMenuCanvas,SinglePlayerGameplayCanvas,
-        LocalMPGameplayCanvas;
+        LocalMPGameplayCanvas,VictoryCanvas,DefeatCanvas;
     [SerializeField]
     GameObject gameplayStuff;
 
@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
         SinglePlayerGameplay,
         GameCreateMenu,
         LocalMPGameplay,
+        Victory,
+        Defeat,
         
         Credits,
 
@@ -36,7 +38,9 @@ public class GameManager : MonoBehaviour {
         GameplayCanvas = GameObject.Find("GameplayCanvas").gameObject.GetComponent<Canvas>();
         MultiplayerCanvas = GameObject.Find("MultiplayerCanvas").gameObject.GetComponent<Canvas>();
         GameCreateMenuCanvas = GameObject.Find("GameCreateMenuCanvas").gameObject.GetComponent<Canvas>();
-       
+        DefeatCanvas = GameObject.Find("DefeatCanvas").gameObject.GetComponent<Canvas>();
+        VictoryCanvas = GameObject.Find("VictoryCanvas").gameObject.GetComponent<Canvas>();
+
         ChangeState(GameState.MainMenu);
 
     }
@@ -82,15 +86,16 @@ public class GameManager : MonoBehaviour {
     {
         GameplayCanvas.enabled = true;
       
-        Gameplay.instance.enabled = true;
+       GetComponent<Gameplay>(). enabled = true;
 
 
         while (currentState == GameState.Gameplay)
         {
             yield return null;
         }
+        GetComponent<Gameplay>().enabled = false;
         GameplayCanvas.enabled = false;
-        Gameplay.instance.enabled = false;
+       
 
     }
     IEnumerator SinglePlayerGameplayState()
@@ -113,7 +118,7 @@ public class GameManager : MonoBehaviour {
     {
 
         GameplayCanvas.enabled = true;
-        GameplayCanvas.GetComponent<LocalMultiplayerScript>().enabled = true;
+        GameplayCanvas.GetComponent<LocalMultiplayerGameplay>().enabled = true;
 
 
 
@@ -122,7 +127,7 @@ public class GameManager : MonoBehaviour {
             yield return null;
         }
         GameplayCanvas.enabled = false;
-        GameplayCanvas.GetComponent<LocalMultiplayerScript>().enabled = false;
+        GameplayCanvas.GetComponent<LocalMultiplayerGameplay>().enabled = false;
 
     }
 
@@ -137,5 +142,32 @@ public class GameManager : MonoBehaviour {
         }
         MultiplayerCanvas.enabled = false;
     }
+    IEnumerator VictoryState()
+    {
+        VictoryCanvas.enabled = true;
+        VictoryCanvas.GetComponent<EndCanvas>().enabled = true;
 
+
+        while (currentState == GameState.Victory)
+        {
+            yield return null;
+        }
+        VictoryCanvas.enabled = false;
+        VictoryCanvas.GetComponent<EndCanvas>().enabled = false;
+
+    }
+    IEnumerator DefeatState()
+    {
+        DefeatCanvas.enabled = true;
+
+        DefeatCanvas.GetComponent<EndCanvas>().enabled = true;
+
+        while (currentState == GameState.Defeat)
+        {
+            yield return null;
+        }
+        DefeatCanvas.enabled = false;
+        DefeatCanvas.GetComponent<EndCanvas>().enabled = false;
+
+    }
 }

@@ -12,19 +12,19 @@ public class EnemyPaddle : MonoBehaviour {
 
     }
 	
-	void Update () {
+	void FixedUpdate () {
         if (ball)
         {
             if (transform.position.y < GameObject.Find("SinglePlayerBall(Clone)").gameObject.transform.position.y)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1) * speed*Time.deltaTime;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 1) * speed;
             }
             else if (transform.position.y > GameObject.Find("SinglePlayerBall(Clone)").gameObject.transform.position.y)
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1) * speed* Time.deltaTime;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, -1) * speed;
             }
             else {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0) * speed* Time.deltaTime;
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0, 0) * speed;
             }
 
         }else if (!ball)
@@ -33,4 +33,25 @@ public class EnemyPaddle : MonoBehaviour {
         }
 
 	}
+
+
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.CompareTag("Ball"))
+        {
+            
+
+
+        }
+
+
+
+
+
+
+
+
+
+    }
 }

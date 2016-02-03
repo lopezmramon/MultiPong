@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using CnControls;
 
@@ -16,11 +17,13 @@ public class SinglePlayerGameplay : MonoBehaviour {
     [SerializeField]
     GameObject singlePlayerBall,paddle,enemyPaddle;
 
+   public  List<GameObject> spawnedList;
 
-    void Start()
+
+    void Awake()
     {
         instance = this;
-
+        spawnedList = new List<GameObject>();
         //Finding GameObjects
         middleText = GameObject.Find("MiddleText").gameObject.GetComponent<Text>();
         pointsLeft = GameObject.Find("PointsLeft").gameObject.GetComponent<Text>();
@@ -39,7 +42,10 @@ public class SinglePlayerGameplay : MonoBehaviour {
         gameStarted = false;
         GameObject player = Instantiate(paddle, GameObject.Find("RightPaddleLocation").gameObject.transform.position, transform.rotation) as GameObject;
         player.gameObject.name = "RightPaddle";
-        Instantiate(enemyPaddle, GameObject.Find("LeftPaddleLocation").gameObject.transform.position, transform.rotation);
+        spawnedList.Add(player);
+        GameObject enemy = Instantiate(enemyPaddle, GameObject.Find("LeftPaddleLocation").gameObject.transform.position, transform.rotation) as GameObject;
+        enemy.gameObject.name = "LeftPaddle";
+        spawnedList.Add(enemy);
     }
     
     void Update()
@@ -94,9 +100,9 @@ public class SinglePlayerGameplay : MonoBehaviour {
            
                 middleText.text = "You lost :(";
                 SoundManager.instance.audioSource.PlayOneShot(defeatClip);
-                GameManager.instance.ChangeState(GameManager.GameState.MainMenu);
-            
+            FinishGame("Defeat");
            
+
 
         }
         if (currentPointsRight == maxPoints)
@@ -105,7 +111,8 @@ public class SinglePlayerGameplay : MonoBehaviour {
 
             middleText.text = "You win!";
             SoundManager.instance.audioSource.PlayOneShot(victoryClip);
-            GameManager.instance.ChangeState(GameManager.GameState.MainMenu);
+            FinishGame("Victory");
+            
 
         }
 
@@ -119,7 +126,7 @@ public class SinglePlayerGameplay : MonoBehaviour {
         timer = 4;
        
             GameObject ball = Instantiate(singlePlayerBall,Vector3.zero,transform.rotation) as GameObject;
-        
+        spawnedList.Add(ball);
         gameStart = false;
         gameStarted = true;
     }
@@ -140,6 +147,33 @@ public class SinglePlayerGameplay : MonoBehaviour {
 
 
     }
-  
+   public void FinishGame(string condition)
+    {
+        spawnedList.ForEach(Destroy);
+        spawnedList.Clear();
+        currentPointsLeft = 0;
+        currentPointsRight = 0;
+        middleText.text = "";
+        pointsLeft.text = "Points: " + currentPointsLeft;
+        pointsRight.text = "Points: " + currentPointsRight;
+        if (condition == "Victory")
+        GameManager.instance.ChangeState(GameManager.GameState.Victory);
+        if (condition == "Defeat")
+            GameManager.instance.ChangeState(GameManager.GameState.Defeat);
+
+       
+
+    }
+    void OnDisable()
+    {
+        spawnedList.ForEach(Destroy);
+        spawnedList.Clear();
+      
+        currentPointsLeft = 0;
+        currentPointsRight = 0;
+        middleText.text = "";
+        pointsLeft.text = "Points: " + currentPointsLeft;
+        pointsRight.text = "Points: " + currentPointsRight;
+    }
 
 }
