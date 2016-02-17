@@ -74,6 +74,46 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\AdBuddiz\AdBuddizBinding.cs" />
+    <Compile Include="Assets\Plugins\AdBuddiz\AdBuddizManager.cs" />
+    <Compile Include="Assets\Plugins\AdBuddiz\AdBuddizRewardedVideoManager.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\AmazonCommon\Source\AmazonLogging.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\AmazonCommon\Source\MiniJSON\MiniJSON.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Jsonable.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\Ad.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdCollapsedDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdDismissedDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdExpandedDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdFailedToLoadDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdFit.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdLoadedDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdPair.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdPosition.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdResizedDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdShown.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AdType.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonException.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonLogger.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsAndroid.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsBase.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsDefault.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsDelegatesBase.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsIOS.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsImpl.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsUnityAndroid.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsUnityBase.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsUnityEditor.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\AmazonMobileAdsUnityIPhone.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\ApplicationKey.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\Dock.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\HorizontalAlign.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\IAmazonMobileAds.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\IDelegator.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\IsEqual.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\IsReady.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\LoadingStarted.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\Placement.cs" />
+    <Compile Include="Assets\Plugins\Amazon\AmazonMobileAds\Source\ShouldEnable.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatChannel.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatClient.cs" />
     <Compile Include="Assets\Plugins\PhotonChatApi\ChatDisconnectCause.cs" />
@@ -87,7 +127,15 @@
     <Compile Include="Assets\Plugins\WebSocket\WebSocket.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\GooglePlayGames\Editor\Podfile.txt" />
+    <None Include="Assets\GooglePlayGames\Editor\template-AndroidManifest.txt" />
+    <None Include="Assets\GooglePlayGames\Editor\template-Constants.txt" />
+    <None Include="Assets\GooglePlayGames\Editor\template-GameInfo.txt" />
     <None Include="Assets\Photon Unity Networking\readme.txt" />
+    <None Include="Assets\Plugins\Amazon\AmazonMobileAds\AmazonCommon\Source\MiniJSON\MiniJSON-License.txt" />
+    <None Include="Assets\Plugins\Android\AmazonMobileAdsSampleAndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\AndroidManifest.xml" />
+    <None Include="Assets\Plugins\Android\MainLibProj\AndroidManifest.xml" />
     <None Include="Assets\Plugins\Photon3Unity3D.xml" />
     <None Include="Assets\Plugins\release_history.txt" />
   </ItemGroup>

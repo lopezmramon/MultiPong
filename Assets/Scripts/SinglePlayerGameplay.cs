@@ -19,7 +19,7 @@ public class SinglePlayerGameplay : MonoBehaviour {
 
    public  List<GameObject> spawnedList;
 
-
+    
     void Awake()
     {
         instance = this;
@@ -149,6 +149,8 @@ public class SinglePlayerGameplay : MonoBehaviour {
     }
    public void FinishGame(string condition)
     {
+        GooglePlayServices.instance.LeaderboardScore("CgkI78r8qZIMEAIQAQ",currentPointsRight);
+
         spawnedList.ForEach(Destroy);
         spawnedList.Clear();
         currentPointsLeft = 0;
@@ -157,9 +159,22 @@ public class SinglePlayerGameplay : MonoBehaviour {
         pointsLeft.text = "Points: " + currentPointsLeft;
         pointsRight.text = "Points: " + currentPointsRight;
         if (condition == "Victory")
-        GameManager.instance.ChangeState(GameManager.GameState.Victory);
+        {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDA",1);
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDw", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQBg", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCw", 1);
+
+            GameManager.instance.ChangeState(GameManager.GameState.Victory);
+        }
+
         if (condition == "Defeat")
+        {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDw", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCw", 1);
+
             GameManager.instance.ChangeState(GameManager.GameState.Defeat);
+        }
 
        
 

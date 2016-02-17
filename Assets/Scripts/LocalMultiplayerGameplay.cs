@@ -136,12 +136,15 @@ public class LocalMultiplayerGameplay : MonoBehaviour {
     {
         if (side == "Right")
         {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQEA", 1);
             currentPointsLeft++;
             pointsLeft.text = "Points: " + currentPointsLeft;
 
         }
         if (side == "Left")
         {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQEA", 1);
+
             currentPointsRight++;
             pointsRight.text = "Points: " + currentPointsRight;
 
@@ -152,6 +155,17 @@ public class LocalMultiplayerGameplay : MonoBehaviour {
 
    public void FinishGame(string condition)
     {
+        if (currentPointsLeft > currentPointsRight)
+        {
+            GooglePlayServices.instance.LeaderboardScore("CgkI78r8qZIMEAIQAg", currentPointsLeft);
+            GooglePlayServices.instance.LeaderboardScore("CgkI78r8qZIMEAIQAw", currentPointsLeft - currentPointsRight);
+        }
+        else {
+
+            GooglePlayServices.instance.LeaderboardScore("CgkI78r8qZIMEAIQAw", currentPointsRight - currentPointsLeft);
+            GooglePlayServices.instance.LeaderboardScore("CgkI78r8qZIMEAIQAg", currentPointsRight);
+
+        }
         spawnedList.ForEach(Destroy);
         spawnedList.Clear();
         currentPointsLeft = 0;
@@ -161,10 +175,22 @@ public class LocalMultiplayerGameplay : MonoBehaviour {
         pointsLeft.text = "Points: " + currentPointsLeft;
         pointsRight.text = "Points: " + currentPointsRight;
         if (condition == "Victory")
-            GameManager.instance.ChangeState(GameManager.GameState.Victory);
-        if (condition == "Defeat")
-            GameManager.instance.ChangeState(GameManager.GameState.Defeat);
+        {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDw", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQBw", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCQ", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCw", 1);
 
+            GameManager.instance.ChangeState(GameManager.GameState.Victory);
+        }
+        if (condition == "Defeat")
+        {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDw", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCQ", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCw", 1);
+
+            GameManager.instance.ChangeState(GameManager.GameState.Defeat);
+        }
 
 
     }

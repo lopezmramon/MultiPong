@@ -234,11 +234,24 @@ public class Gameplay : Photon.MonoBehaviour {
         spawnedList.Clear();
         currentPointsLeft = 0;
         currentPointsRight = 0;
-      
+
         if (condition == "Victory")
+        {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDg", 1);
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDw", 1);
+            GooglePlayServices.instance.UnlockableAchievement("CgkI78r8qZIMEAIQCA", 100.0f);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCg", 1);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCw", 1);
             GameManager.instance.ChangeState(GameManager.GameState.Victory);
+        }
         if (condition == "Defeat")
+        {
+            GooglePlayServices.instance.IncreaseEvent("CgkI78r8qZIMEAIQDw", 1);
+            GooglePlayServices.instance.UnlockableAchievement("CgkI78r8qZIMEAIQCA", 100.0f);
+            GooglePlayServices.instance.IncrementalAchievement("CgkI78r8qZIMEAIQCw", 1);
+
             GameManager.instance.ChangeState(GameManager.GameState.Defeat);
+        }
 
         PhotonNetwork.Disconnect();
 
